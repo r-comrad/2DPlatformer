@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public float offset = 0;
+    public float offset = -135;
     public GameObject bullet;
     public Transform shotPoint;
     // Start is called before the first frame update
 
-    public float shotPeriod = 100;
+    public float shotPeriod = 1;
     public float timeFromShot;
 
     void Start()
@@ -31,7 +31,7 @@ public class Weapon : MonoBehaviour
             if (Input.GetMouseButton(0))
             {
                 Instantiate(bullet, shotPoint.position, transform.rotation);
-                timeFromShot = timeFromShot;
+                timeFromShot = shotPeriod;
             }
         }
     }

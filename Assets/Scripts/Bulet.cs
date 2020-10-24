@@ -16,7 +16,7 @@ public class Bulet : MonoBehaviour
     void Update()
     {
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, distance);
-        if (hitInfo.collider.CompareTag("Enemy"))
+        //if (hitInfo.collider.CompareTag("Enemy"))
         {
             //hitInfo.collider.GetComponent<Enemy>().TakeDamage();
         }
