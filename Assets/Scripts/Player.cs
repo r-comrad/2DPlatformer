@@ -12,8 +12,8 @@ public class Player : MonoBehaviour
     public float dy = 0.0f;
     public bool mOnGround = false;
     public bool mFaceRight = true;
-
-    //protected R
+    public float mFlyTime = 0;
+    public float mMaxFlyTime = 3;
 
     void Start()
     {
@@ -24,28 +24,35 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float dx = Input.GetAxis("Horizontal");
-        //rb.MovePosition(rb.position + Vector2.right * dx * spped);
-        //transform.position = new Vector3(a * (float)Math.Cos(mAlpha), b * (float)Math.Sin(mAlpha), 1f);
-        rb2D.MovePosition(rb2D.position + Vector2.right * dx * mSpeed * Time.deltaTime);
+        //float dx = Input.GetAxis("Horizontal");
+        //rb2D.MovePosition(rb2D.position + Vector2.right * dx * mSpeed * Time.deltaTime);
+        //if (mOnGround && Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    rb2D.AddForce(Vector2.up * 10000);
+        //    mOnGround = false;
+        //}
 
-        if (mOnGround && Input.GetKeyDown(KeyCode.Space))
+
+        float dx = Input.GetAxis("Horizontal");
+        float dy = Input.GetAxis("Vertical");
+        if (dy != 0)
         {
-            rb2D.AddForce(Vector2.up * 4000);
             mOnGround = false;
         }
+        if (mOnGround == false)
+        {
+            mFlyTime -= Time.deltaTime;
+            if (mFlyTime <= 0)
+            {
+                mFlyTime = 0;
+                dy = 0;
+            }
+        }
+        
+        rb2D.MovePosition(rb2D.position +
+            Vector2.right * dx * mSpeed * Time.deltaTime +
+            Vector2.up * dy * mSpeed * 2 * Time.deltaTime);
 
-        //if (dy > 1e-5 || Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    //rb2D.AddForce(Vector2.up * 4000);
-        //    dy = 1;
-        //    //rb2D.MovePosition(rb2D.position + Vector2.up * dy * mSpeed * Time.deltaTime);
-        //}
-        //else
-        //{
-        //    dy = 0;
-        //}
-        //if (dy > 1e-5) dy -= 0.1f;
 
         if (dx > 0 && !mFaceRight) flip();
         else if (dx < 0 && mFaceRight) flip();
@@ -62,6 +69,7 @@ public class Player : MonoBehaviour
         if (other.tag == "Ground")
         {
             mOnGround = true;
+            mFlyTime = mMaxFlyTime;
         }
     }
 }
