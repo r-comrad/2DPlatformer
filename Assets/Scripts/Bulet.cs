@@ -7,6 +7,8 @@ public class Bulet : MonoBehaviour
     public float speed = 20f;
     public float distance;
     public LayerMask whatIsSolid;
+    public float mMaxLifeTime = 3;
+    public float mLifeTime = 0;
     // Start is called before the first frame update
 
 
@@ -18,7 +20,12 @@ public class Bulet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, distance, whatIsSolid);
+        mLifeTime += Time.deltaTime;
+        if (mLifeTime > mMaxLifeTime)
+        {
+            Destroy(gameObject);
+        }
+
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, distance, whatIsSolid);
         if (hitInfo.collider != null)
         {

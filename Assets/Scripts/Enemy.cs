@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage()
     {
-
+        Destroy(gameObject);
     }
 
     //void OnTriggerEnter2D(Collider2D other)
