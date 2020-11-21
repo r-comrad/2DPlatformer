@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     private Vector2 velocity;
     private Rigidbody2D rb2D;
     public float dy = 0.0f;
+    public bool mOnGround = false;
+    public bool mFaceRight = true;
 
     //protected R
 
@@ -27,9 +29,10 @@ public class Player : MonoBehaviour
         //transform.position = new Vector3(a * (float)Math.Cos(mAlpha), b * (float)Math.Sin(mAlpha), 1f);
         rb2D.MovePosition(rb2D.position + Vector2.right * dx * mSpeed * Time.deltaTime);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (mOnGround && Input.GetKeyDown(KeyCode.Space))
         {
             rb2D.AddForce(Vector2.up * 4000);
+            mOnGround = false;
         }
 
         //if (dy > 1e-5 || Input.GetKeyDown(KeyCode.Space))
@@ -44,5 +47,21 @@ public class Player : MonoBehaviour
         //}
         //if (dy > 1e-5) dy -= 0.1f;
 
+        if (dx > 0 && !mFaceRight) flip();
+        else if (dx < 0 && mFaceRight) flip();
+    }
+
+    void flip()
+    {
+        mFaceRight = !mFaceRight;
+        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Ground")
+        {
+            mOnGround = true;
+        }
     }
 }

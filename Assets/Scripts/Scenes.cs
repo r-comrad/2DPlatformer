@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Enemy : MonoBehaviour
+public class Scenes : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -13,11 +14,14 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SetScene(1);
+        }
     }
 
-    public void TakeDamage()
+    public void SetScene (int aSceneNumber)
     {
-
+        SceneManager.LoadScene(aSceneNumber);
     }
 }

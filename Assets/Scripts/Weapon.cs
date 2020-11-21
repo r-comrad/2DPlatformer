@@ -30,7 +30,10 @@ public class Weapon : MonoBehaviour
             timeFromShot = 0;
             if (Input.GetMouseButton(0))
             {
+                transform.rotation = Quaternion.Euler(0f, 0f, rotZ - 90);
                 Instantiate(bullet, shotPoint.position, transform.rotation);
+                transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);
+                //Instantiate(bullet, shotPoint.position, new Vector3 { 0, 0, 0 });
                 timeFromShot = shotPeriod;
             }
         }
